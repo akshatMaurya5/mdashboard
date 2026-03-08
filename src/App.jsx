@@ -283,6 +283,20 @@ function App() {
       </section>
 
       <section className="card">
+        <h2>Highest Single-Month Count (Per Person)</h2>
+        <div className="person-peak-grid">
+          {perPerson.map((row) => (
+            <article className="peak-widget" key={row.key}>
+              <p className="peak-person">{PERSON_LABEL[row.key]}</p>
+              <p className="peak-value">{row.peakMonthValue}</p>
+              <p className="peak-month">{row.peakMonth}</p>
+              <p className="peak-caption">best month total</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="card">
         <h2>Per Person</h2>
         <table>
           <thead>
@@ -294,7 +308,6 @@ function App() {
               <th>Avg / Day</th>
               <th>Avg / Active Day</th>
               <th>Peak Day</th>
-              <th>Peak Month</th>
               <th>Streaks (Active/Dry)</th>
             </tr>
           </thead>
@@ -308,7 +321,6 @@ function App() {
                 <td>{row.avgPerDay}</td>
                 <td>{row.avgWhenActive}</td>
                 <td>{row.peakDate} ({row.peakValue})</td>
-                <td>{row.peakMonth} ({row.peakMonthValue})</td>
                 <td>{row.longestActive}/{row.longestDry} (now {row.currentActive}/{row.currentDry})</td>
               </tr>
             ))}

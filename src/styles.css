@@ -110,6 +110,43 @@ tbody tr:hover {
   gap: 9px;
 }
 
+.person-peak-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 12px;
+}
+
+.peak-widget {
+  border: 1px solid #2a3c57;
+  border-radius: 12px;
+  padding: 14px;
+  background: linear-gradient(145deg, #111a2a, #0c1422);
+}
+
+.peak-person {
+  margin: 0 0 2px 0;
+  color: #8ca0b8;
+  font-size: 0.85rem;
+}
+
+.peak-value {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #8bc5ff;
+}
+
+.peak-month {
+  margin: 2px 0 0 0;
+  font-size: 0.95rem;
+}
+
+.peak-caption {
+  margin: 1px 0 0 0;
+  color: #8ca0b8;
+  font-size: 0.8rem;
+}
+
 .bar-row {
   display: grid;
   grid-template-columns: 72px 1fr 56px;
