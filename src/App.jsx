@@ -79,6 +79,14 @@ function aggregateByMonth(rows) {
   return [...map.values()].sort((x, y) => (x.month < y.month ? -1 : 1));
 }
 
+function bestMonthForPerson(monthlyRows, person) {
+  let best = null;
+  for (const row of monthlyRows) {
+    if (!best || row[person] > best[person]) best = row;
+  }
+  return best;
+}
+
 function aggregateByYear(rows) {
   const map = new Map();
   for (const row of rows) {
@@ -188,10 +196,13 @@ function App() {
   const compare30 = compareRecentWindows(rows, 30);
   const sourceSplit = sourceUsage(rows);
 
+  const monthly = aggregateByMonth(rows);
+
   const perPerson = PEOPLE.map((p) => {
     const personTotal = totalsByPerson[p];
     const personActiveDays = rows.filter((row) => row[p] > 0).length;
     const peak = personPeak(rows, p);
+    const peakMonth = bestMonthForPerson(monthly, p);
     return {
       key: p,
       total: personTotal,
@@ -201,6 +212,8 @@ function App() {
       avgWhenActive: personActiveDays ? (personTotal / personActiveDays).toFixed(2) : "0.00",
       peakDate: peak?.date ?? "-",
       peakValue: peak?.[p] ?? 0,
+      peakMonth: peakMonth?.month ?? "-",
+      peakMonthValue: peakMonth?.[p] ?? 0,
       longestDry: longestStreak(rows, (r) => r[p] === 0),
       longestActive: longestStreak(rows, (r) => r[p] > 0),
       currentDry: currentStreak(rows, (r) => r[p] === 0),
@@ -208,7 +221,6 @@ function App() {
     };
   });
 
-  const monthly = aggregateByMonth(rows);
   const yearly = aggregateByYear(rows);
   const quarterly = aggregateByQuarter(rows);
   const weekdays = aggregateWeekdays(rows);
@@ -282,6 +294,7 @@ function App() {
               <th>Avg / Day</th>
               <th>Avg / Active Day</th>
               <th>Peak Day</th>
+              <th>Peak Month</th>
               <th>Streaks (Active/Dry)</th>
             </tr>
           </thead>
@@ -295,6 +308,7 @@ function App() {
                 <td>{row.avgPerDay}</td>
                 <td>{row.avgWhenActive}</td>
                 <td>{row.peakDate} ({row.peakValue})</td>
+                <td>{row.peakMonth} ({row.peakMonthValue})</td>
                 <td>{row.longestActive}/{row.longestDry} (now {row.currentActive}/{row.currentDry})</td>
               </tr>
             ))}
