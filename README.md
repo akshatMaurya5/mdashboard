@@ -1,9 +1,5 @@
 # Coomers Dashboard
 
-React dashboard generated from the workbook:
-
-- `C:\Users\DELL_1\Desktop\Coomers Forever_.xlsx`
-
 ## Run
 
 ```bash
@@ -11,15 +7,6 @@ npm install
 npm run dev
 ```
 
-## Rebuild data from workbook
-
-```bash
-python scripts/build_dataset.py "C:\Users\DELL_1\Desktop\Coomers Forever_.xlsx"
-```
-
-This writes to:
-
-- `src/data/coomersData.json`
 
 ## Deduplication policy
 
